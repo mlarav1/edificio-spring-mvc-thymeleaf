@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Nueva clave')}"></head>
+<body>
+<div class="login">
+  <div class="tarjeta">
+    <h1>Nueva clave</h1>
+    <div th:replace="~{fragments/layout :: mensajes}"></div>
+    <p>Hola, <strong th:text="${nombre}">usuario</strong>. Escribe tu nueva clave.</p>
+    <form th:action="@{/restablecer}" method="post">
+      <input type="hidden" name="token" th:value="${token}">
+      <div class="campo"><label for="nuevaClave">Nueva clave</label>
+        <input type="password" id="nuevaClave" name="nuevaClave" minlength="6" required autofocus autocomplete="new-password"></div>
+      <div class="campo"><label for="confirmarClave">Confirmar clave</label>
+        <input type="password" id="confirmarClave" name="confirmarClave" minlength="6" required autocomplete="new-password"></div>
+      <button class="btn" type="submit">Guardar nueva clave</button>
+    </form>
+    <p class="enlace-centro"><a th:href="@{/login}">Cancelar</a></p>
+  </div>
+</div>
+</body>
+</html>

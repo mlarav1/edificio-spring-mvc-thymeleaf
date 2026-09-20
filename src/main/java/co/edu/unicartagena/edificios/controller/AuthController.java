@@ -52,15 +52,46 @@ public class AuthController {
         return "redirect:/login";
     }
 
+    /** Formulario de nueva clave: solo se muestra si el token del enlace es valido. */
+    @GetMapping("/restablecer")
+    public String formularioRestablecer(@RequestParam(required = false) String token, Model model,
+                                        RedirectAttributes flash) {
+        try {
+            model.addAttribute("nombre", auth.validarToken(token).getNombre());
+            model.addAttribute("token", token);
+            return "auth/restablecer";
+        } catch (NegocioException e) {
+            flash.addFlashAttribute("mensaje", e.getMessage());
+            flash.addFlashAttribute("tipo", "error");
+            return "redirect:/recuperar";
+        }
+    }
+
+    @PostMapping("/restablecer")
+    public String restablecer(@RequestParam String token, @RequestParam String nuevaClave,
+                              @RequestParam String confirmarClave, RedirectAttributes flash) {
+        try {
+            auth.restablecer(token, nuevaClave, confirmarClave);
+            flash.addFlashAttribute("mensaje", "Tu clave fue actualizada. Ya puedes iniciar sesión.");
+            flash.addFlashAttribute("tipo", "ok");
+            return "redirect:/login";
+        } catch (NegocioException e) {
+            flash.addFlashAttribute("mensaje", e.getMessage());
+            flash.addFlashAttribute("tipo", "error");
+            return "redirect:/restablecer?token=" + token;
+        }
+    }
+
     @GetMapping("/recuperar")
     public String recuperar() { return "auth/recuperar"; }
 
+    /** Envia por correo un enlace con token (vigente 30 min, un solo uso). */
     @PostMapping("/recuperar")
     public String enviarClave(@RequestParam String correo, RedirectAttributes flash) {
         try {
-            auth.recuperarClave(correo);
+            auth.solicitarRecuperacion(correo);
             // Respuesta identica exista o no el correo.
-            flash.addFlashAttribute("mensaje", "Si el correo existe, te enviamos una clave temporal.");
+            flash.addFlashAttribute("mensaje", "Si el correo existe, te enviamos un enlace para restablecer tu clave.");
             flash.addFlashAttribute("tipo", "ok");
             return "redirect:/login";
         } catch (NegocioException e) {
