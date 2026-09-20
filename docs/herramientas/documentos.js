@@ -43,6 +43,14 @@ const hijos = [
     .map(([k, v]) => new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 100 }, children: [new TextRun({ text: k + ': ', bold: true }), new TextRun(v)] })),
   new Paragraph({ children: [new PageBreak()] }),
 
+  h1('Acceso a la aplicación y usuarios de prueba'),
+  p('La aplicación desplegada está en la dirección indicada en la portada. Nota: el servicio gratuito se duerme tras un rato sin uso, por lo que la primera carga puede tardar cerca de 50 segundos.'),
+  li('admin@edificios.com · clave Admin123 · rol ADMIN: gestiona edificios y usuarios, y ve todos los reportes.'),
+  li('operador@edificios.com · clave Operador123 · rol OPERADOR: gestiona edificios.'),
+  li('consulta@edificios.com · clave Consulta123 · rol CONSULTA: solo lectura.'),
+  p('El correo es el identificador (id) del usuario. Para probar la recuperación de clave se usa la opción «¿Olvidaste tu clave?» del login con un correo registrado: el sistema envía un enlace con token (vigente 30 minutos y de un solo uso).'),
+  new Paragraph({ children: [new PageBreak()] }),
+
   h1('1. Descripción del ejercicio'),
   p('El ejercicio 13 pide administrar edificios (nombre, metros cuadrados, altura, pisos, apartamentos, oficinas, parqueadero, piscinas, país, departamento, ciudad, ascensor, valor de administración y zona social; se agregó un id técnico). Además hay una entidad Usuario (id, clave, nombre, rol) con login, control de acceso por rol, recuperación de clave por correo y cuatro reportes parametrizados.'),
   p('La aplicación está hecha con Spring Boot 3.5.16, Spring MVC con renderizado del lado del servidor, Thymeleaf y Spring Data JPA sobre PostgreSQL. No es una API RESTful: los controladores son @Controller y retornan el nombre de una plantilla.'),
