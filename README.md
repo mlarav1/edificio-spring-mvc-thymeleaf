@@ -74,4 +74,6 @@ java -jar target/edificio-spring-mvc-1.0.0.jar      # http://localhost:8080
 
 ## Despliegue
 
+Aplicación publicada: https://edificios-spring-mvc.onrender.com (Render, plan gratuito: se duerme tras un tiempo sin uso y la primera petición tarda ~50 s).
+
 `Dockerfile` (Java 17). Variables de entorno anteriores; cargar `db/schema.sql` y `db/data.sql` en la base de datos en la nube.

@@ -17,4 +17,4 @@ No tuve el texto original de los 14 puntos de la actividad; esta lista sigue los
 | 11 | Recuperación de clave por correo con BCrypt | Cumplido (probado con SMTP local; falta SMTP real en producción) |
 | 12 | Repositorio público con historial de commits propio | Cumplido |
 | 13 | Word de evidencias, PDF de ficha, guion, guía de estudio | Cumplido (falta el enlace del video) |
-| 14 | Aplicación desplegada y video de sustentación | Despliegue: ver PENDIENTES.md; video: lo graba Miguel |
+| 14 | Aplicación desplegada y video de sustentación | Despliegue cumplido: https://edificios-spring-mvc.onrender.com (recuperación de clave real pendiente de SMTP); video: lo graba Miguel |
