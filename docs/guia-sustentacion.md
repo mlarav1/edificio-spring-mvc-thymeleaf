@@ -44,7 +44,7 @@ Guardar un edificio: navegador → `POST /edificios/guardar` → `AuthIntercepto
 
 ## 9. ¿Cómo se guardan las claves y cómo se recupera una clave?
 
-Con BCrypt (`PasswordEncoder`); nunca en texto plano. `AuthService.recuperarClave` genera una clave temporal con `SecureRandom`, la envía con `JavaMailSender` (`CorreoService`) y solo entonces guarda su hash. La respuesta es igual exista o no el correo, para no revelar usuarios.
+Con BCrypt (`PasswordEncoder`); nunca en texto plano. `AuthService.solicitarRecuperacion` genera un token de 256 bits con `SecureRandom`, guarda solo su hash SHA-256 con vencimiento de 30 minutos (tabla `token_recuperacion`) y `CorreoService` envía por correo (API de Brevo o SMTP) el enlace `/restablecer?token=...`. `AuthService.restablecer` valida el token, guarda la nueva clave con BCrypt y borra el token: solo sirve una vez. La respuesta es igual exista o no el correo, para no revelar usuarios.
 
 ## 10. ¿Por qué el `id` del Usuario es el correo?
 

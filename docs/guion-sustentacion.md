@@ -27,7 +27,7 @@ Duración aproximada: 11 a 13 minutos. Para leer en cámara.
 "Hay cuatro reportes con consultas de Spring Data JPA. Por ciudad y rango de pisos se resuelve con un método derivado del nombre. Por valor de administración, con filtros de ascensor y zona social, uso `@Query` con parámetros. Los de usuarios son por rol y por texto en el nombre o el dominio del correo."
 
 ## 9. Recuperación de clave (10:15 - 11:00)
-"En 'Olvidaste tu clave' escribo mi correo. El sistema genera una clave temporal, la envía con `spring-boot-starter-mail` y guarda solo su hash BCrypt. La respuesta es la misma exista o no el correo."
+"En 'Olvidaste tu clave' escribo mi correo. El sistema genera un token aleatorio, guarda solo su hash y envía por correo un enlace que vence en 30 minutos y se usa una sola vez; con ese enlace creo una clave nueva, que se guarda con BCrypt. La respuesta es la misma exista o no el correo."
 
 ## 10. Aplicación desplegada y commits (11:00 - 12:00)
 "Esta es la aplicación publicada: [URL de la aplicación desplegada]. Y este es el repositorio, [URL del repositorio], con el historial de commits: creación del proyecto, configuración, entidades, repositorios, servicios, controladores, plantillas, autenticación, reportes, recuperación de clave y despliegue, todos hechos por mí a medida que avanzaba. Muchas gracias."

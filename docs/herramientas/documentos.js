@@ -103,7 +103,7 @@ const hijos = [
   ...figura('capturas/11-reporte-usuario-texto.png', 'Reporte de usuarios por texto.', 580, 400),
 
   h1('11. Recuperación de clave'),
-  p('AuthService genera una clave temporal aleatoria, la envía con spring-boot-starter-mail y solo entonces guarda su hash BCrypt. La respuesta es la misma exista o no el correo.'),
+  p('AuthService genera un token aleatorio de 256 bits, guarda solo su hash SHA-256 (tabla token_recuperacion, vigencia de 30 minutos) y CorreoService envía por correo el enlace /restablecer?token=... (API de Brevo o SMTP). El token sirve una sola vez; la nueva clave se guarda con BCrypt. La respuesta es la misma exista o no el correo.'),
   ...figura('capturas-codigo/09-recuperacion-clave.png', 'Recuperación de clave en AuthService.', 560, 560),
   ...figura('capturas/02-recuperar-clave.png', 'Formulario de recuperación de clave.', 460, 360),
   ...figura('capturas/13-recuperar-clave-enviada.png', 'Confirmación tras solicitar la recuperación.', 460, 360),

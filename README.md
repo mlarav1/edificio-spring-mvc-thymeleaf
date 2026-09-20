@@ -41,7 +41,7 @@ JPA solo **valida** el esquema (`ddl-auto=validate`); el esquema lo crea `db/sch
 
 ## Variables de entorno (ver `.env.example`)
 
-`DB_URL`, `DB_USER`, `DB_PASSWORD`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_AUTH`, `SMTP_FROM`, `SMTP_STARTTLS`, `SMTP_SSL`, `PORT`.
+`DB_URL`, `DB_USER`, `DB_PASSWORD`, `BREVO_API_KEY`, `MAIL_FROM`, `MAIL_FROM_NAME`, `APP_BASE_URL` (en Render se toma de `RENDER_EXTERNAL_URL`), `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_AUTH`, `SMTP_STARTTLS`, `PORT`.
 
 ## Ejecución local
 
@@ -68,7 +68,7 @@ java -jar target/edificio-spring-mvc-1.0.0.jar      # http://localhost:8080
 
 - **Sesión:** `HttpSession` con un `HandlerInterceptor` (`AuthInterceptor`): sin sesión redirige a `/login`; `/usuarios/**` solo ADMIN; CONSULTA es de solo lectura. Se eligió por ser más fácil de explicar que Spring Security completo.
 - **Claves con BCrypt** (`spring-security-crypto`): nunca en texto plano.
-- **Recuperación de clave:** se genera una clave temporal aleatoria, se envía con `spring-boot-starter-mail` y solo entonces se guarda su hash. La respuesta es igual exista o no el correo.
+- **Recuperación de clave por token:** se genera un token aleatorio de 256 bits; en la base (tabla `token_recuperacion`, aparte para que `Usuario` conserve sus 4 atributos) solo se guarda su hash SHA-256 con vencimiento de 30 minutos. El correo lleva un enlace `/restablecer?token=...`; el token sirve una sola vez y la nueva clave se guarda con BCrypt. La respuesta es igual exista o no el correo. Envío: API HTTPS de Brevo (`BREVO_API_KEY`, `MAIL_FROM`; el plan gratuito de Render bloquea SMTP), o SMTP (`SMTP_HOST`), o el enlace en el log del servidor si no hay ninguno.
 - **Sin SQL concatenado:** solo repositorios JPA y consultas con parámetros.
 - **Errores:** `error.html` y `@ControllerAdvice` para errores de negocio.
 
