@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Edificios')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: barra}"></header>
+<main>
+  <div th:replace="~{fragments/layout :: mensajes}"></div>
+  <div class="cabecera-lista">
+    <h1>Edificios</h1>
+    <a class="btn" th:if="${usuarioActual.puedeEscribir()}" th:href="@{/edificios/nuevo}">+ Nuevo edificio</a>
+  </div>
+  <div class="tarjeta" th:replace="~{fragments/layout :: tabla-edificios(${edificios}, ${usuarioActual.puedeEscribir()})}"></div>
+</main>
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>

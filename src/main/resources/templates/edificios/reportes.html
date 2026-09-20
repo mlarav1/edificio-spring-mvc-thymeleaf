@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Reportes de edificios')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: barra}"></header>
+<main>
+  <div th:replace="~{fragments/layout :: mensajes}"></div>
+  <h1>Reportes de edificios</h1>
+
+  <div class="tarjeta">
+    <h2>1. Edificios por ciudad y rango de pisos</h2>
+    <form th:action="@{/edificios/reportes/ciudad-pisos}" method="get">
+      <div class="formulario">
+        <div class="campo"><label for="ciudad">Ciudad (o parte del nombre)</label>
+          <input type="text" id="ciudad" name="ciudad" required th:value="${param.ciudad}"></div>
+        <div class="campo"><label for="pisosMin">Pisos mínimos</label>
+          <input type="number" min="1" id="pisosMin" name="pisosMin" required th:value="${param.pisosMin != null} ? ${param.pisosMin} : 1"></div>
+        <div class="campo"><label for="pisosMax">Pisos máximos</label>
+          <input type="number" min="1" id="pisosMax" name="pisosMax" required th:value="${param.pisosMax != null} ? ${param.pisosMax} : 100"></div>
+      </div>
+      <div class="pie-form"><button class="btn" type="submit">Consultar</button></div>
+    </form>
+    <th:block th:if="${reporte == '1' and resultado != null}">
+      <hr>
+      <div th:replace="~{fragments/layout :: tabla-edificios(${resultado}, false)}"></div>
+    </th:block>
+  </div>
+
+  <div class="tarjeta">
+    <h2>2. Edificios por valor de administración</h2>
+    <form th:action="@{/edificios/reportes/administracion}" method="get">
+      <div class="formulario">
+        <div class="campo"><label for="valorMin">Valor mínimo ($)</label>
+          <input type="number" min="0" id="valorMin" name="valorMin" required th:value="${param.valorMin != null} ? ${param.valorMin} : 0"></div>
+        <div class="campo"><label for="valorMax">Valor máximo ($)</label>
+          <input type="number" min="0" id="valorMax" name="valorMax" required th:value="${param.valorMax != null} ? ${param.valorMax} : 5000000"></div>
+        <div class="campo"><label for="ascensor">Ascensor</label>
+          <select id="ascensor" name="ascensor">
+            <option value="" th:selected="${param.ascensor == null or #strings.isEmpty(param.ascensor)}">Cualquiera</option>
+            <option value="SI" th:selected="${param.ascensor != null and param.ascensor[0] == 'SI'}">Con ascensor</option>
+            <option value="NO" th:selected="${param.ascensor != null and param.ascensor[0] == 'NO'}">Sin ascensor</option></select></div>
+        <div class="campo"><label for="zonaSocial">Zona social</label>
+          <select id="zonaSocial" name="zonaSocial">
+            <option value="" th:selected="${param.zonaSocial == null or #strings.isEmpty(param.zonaSocial)}">Cualquiera</option>
+            <option value="SI" th:selected="${param.zonaSocial != null and param.zonaSocial[0] == 'SI'}">Con zona social</option>
+            <option value="NO" th:selected="${param.zonaSocial != null and param.zonaSocial[0] == 'NO'}">Sin zona social</option></select></div>
+      </div>
+      <div class="pie-form"><button class="btn" type="submit">Consultar</button></div>
+    </form>
+    <th:block th:if="${reporte == '2' and resultado != null}">
+      <hr>
+      <div th:replace="~{fragments/layout :: tabla-edificios(${resultado}, false)}"></div>
+    </th:block>
+  </div>
+</main>
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>

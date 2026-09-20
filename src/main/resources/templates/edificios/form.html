@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Edificio')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: barra}"></header>
+<main>
+  <h1 th:text="${edificio.id == null} ? 'Nuevo edificio' : 'Editar edificio'">Edificio</h1>
+  <div class="tarjeta">
+    <!-- th:object enlaza el formulario con la entidad; th:field genera name/id/value y conserva lo digitado -->
+    <form th:action="@{/edificios/guardar}" th:object="${edificio}" method="post" novalidate>
+      <div class="alerta error" th:if="${#fields.hasGlobalErrors()}">
+        <div th:each="err : ${#fields.globalErrors()}" th:text="${err}">error</div>
+      </div>
+      <div class="alerta error" th:if="${#fields.hasErrors('*') and !#fields.hasGlobalErrors()}">Revisa los campos marcados.</div>
+      <input type="hidden" th:field="*{id}">
+      <div class="formulario">
+        <div class="campo"><label for="nombre">Nombre</label>
+          <input type="text" th:field="*{nombre}" maxlength="120">
+          <small class="err" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small></div>
+        <div class="campo"><label for="pais">País</label>
+          <input type="text" th:field="*{pais}">
+          <small class="err" th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}"></small></div>
+        <div class="campo"><label for="departamento">Departamento</label>
+          <input type="text" th:field="*{departamento}">
+          <small class="err" th:if="${#fields.hasErrors('departamento')}" th:errors="*{departamento}"></small></div>
+        <div class="campo"><label for="ciudad">Ciudad</label>
+          <input type="text" th:field="*{ciudad}">
+          <small class="err" th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"></small></div>
+        <div class="campo"><label for="metrosCuadrados">Metros cuadrados</label>
+          <input type="number" step="0.01" th:field="*{metrosCuadrados}">
+          <small class="err" th:if="${#fields.hasErrors('metrosCuadrados')}" th:errors="*{metrosCuadrados}"></small></div>
+        <div class="campo"><label for="altura">Altura (m)</label>
+          <input type="number" step="0.01" th:field="*{altura}">
+          <small class="err" th:if="${#fields.hasErrors('altura')}" th:errors="*{altura}"></small></div>
+        <div class="campo"><label for="numPisos">Número de pisos</label>
+          <input type="number" th:field="*{numPisos}">
+          <small class="err" th:if="${#fields.hasErrors('numPisos')}" th:errors="*{numPisos}"></small></div>
+        <div class="campo"><label for="numApartamentos">Número de apartamentos</label>
+          <input type="number" th:field="*{numApartamentos}">
+          <small class="err" th:if="${#fields.hasErrors('numApartamentos')}" th:errors="*{numApartamentos}"></small></div>
+        <div class="campo"><label for="numOficinas">Número de oficinas</label>
+          <input type="number" th:field="*{numOficinas}">
+          <small class="err" th:if="${#fields.hasErrors('numOficinas')}" th:errors="*{numOficinas}"></small></div>
+        <div class="campo"><label for="nombreParqueadero">Nombre del parqueadero</label>
+          <input type="text" th:field="*{nombreParqueadero}"></div>
+        <div class="campo"><label for="numPiscinas">Número de piscinas</label>
+          <input type="number" th:field="*{numPiscinas}">
+          <small class="err" th:if="${#fields.hasErrors('numPiscinas')}" th:errors="*{numPiscinas}"></small></div>
+        <div class="campo"><label for="valorAdministracion">Valor de administración ($)</label>
+          <input type="number" step="0.01" th:field="*{valorAdministracion}">
+          <small class="err" th:if="${#fields.hasErrors('valorAdministracion')}" th:errors="*{valorAdministracion}"></small></div>
+        <div class="campo check"><input type="checkbox" th:field="*{tieneAscensor}"><label for="tieneAscensor1">Tiene ascensor</label></div>
+        <div class="campo check"><input type="checkbox" th:field="*{tieneZonaSocial}"><label for="tieneZonaSocial1">Tiene zona social</label></div>
+      </div>
+      <div class="pie-form">
+        <button class="btn" type="submit">Guardar</button>
+        <a class="btn sec" th:href="@{/edificios}">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</main>
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>
