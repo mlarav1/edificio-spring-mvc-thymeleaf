@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Inicio')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: barra}"></header>
+<main>
+  <div th:replace="~{fragments/layout :: mensajes}"></div>
+  <h1 th:text="'Bienvenido, ' + ${usuarioActual.nombre}">Bienvenido</h1>
+  <div class="inicio">
+    <a class="mod" th:href="@{/edificios}"><h3>Edificios</h3><p>Consulta y administra el inventario de edificios.</p></a>
+    <a class="mod" th:href="@{/edificios/reportes}"><h3>Reportes de edificios</h3><p>Por ciudad y pisos, o por valor de administración.</p></a>
+    <a class="mod" th:if="${usuarioActual.esAdmin()}" th:href="@{/usuarios}"><h3>Usuarios</h3><p>Administra cuentas y roles del sistema.</p></a>
+    <a class="mod" th:if="${usuarioActual.esAdmin()}" th:href="@{/usuarios/reportes}"><h3>Reportes de usuarios</h3><p>Por rol o por texto en nombre/correo.</p></a>
+  </div>
+</main>
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>

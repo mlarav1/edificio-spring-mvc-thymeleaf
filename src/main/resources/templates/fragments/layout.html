@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- Fragmentos compartidos: cabecera, menu, mensajes y tablas reutilizables (th:fragment) -->
+<head th:fragment="head(titulo)">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${titulo} + ' - Edificios'">Edificios</title>
+  <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<header class="barra" th:fragment="barra">
+  <span class="marca">&#127970; Edificios</span>
+  <nav>
+    <a th:href="@{/}" th:classappend="${ruta == '/'} ? 'activo'">Inicio</a>
+    <a th:href="@{/edificios}" th:classappend="${ruta == '/edificios' or ruta.startsWith('/edificios/nuevo') or ruta.startsWith('/edificios/editar')} ? 'activo'">Edificios</a>
+    <a th:href="@{/edificios/reportes}" th:classappend="${ruta.startsWith('/edificios/reportes')} ? 'activo'">Reportes de edificios</a>
+    <th:block th:if="${usuarioActual != null and usuarioActual.esAdmin()}">
+      <a th:href="@{/usuarios}" th:classappend="${ruta == '/usuarios' or ruta.startsWith('/usuarios/nuevo') or ruta.startsWith('/usuarios/editar')} ? 'activo'">Usuarios</a>
+      <a th:href="@{/usuarios/reportes}" th:classappend="${ruta.startsWith('/usuarios/reportes')} ? 'activo'">Reportes de usuarios</a>
+    </th:block>
+  </nav>
+  <div class="sesion" th:if="${usuarioActual != null}">
+    <span th:text="${usuarioActual.nombre} + ' (' + ${usuarioActual.rol} + ')'">Usuario</span>
+    <form th:action="@{/logout}" method="post" style="margin:0">
+      <button type="submit" class="btn peq sec">Cerrar sesión</button>
+    </form>
+  </div>
+</header>
+
+<div th:fragment="mensajes">
+  <div th:if="${mensaje}" class="alerta" th:classappend="${tipo}" th:text="${mensaje}"></div>
+  <div th:if="${error}" class="alerta error" th:text="${error}"></div>
+</div>
+
+<footer th:fragment="pie">Universidad de Cartagena · Desarrollo Web · Spring Boot MVC + Thymeleaf · Ejercicio 13 - Edificio</footer>
+
+<div th:fragment="tabla-edificios(filas, conAcciones)">
+  <div class="tabla-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th><th>Ciudad</th><th>Depto.</th><th class="num">Pisos</th><th class="num">m²</th>
+          <th class="num">Altura (m)</th><th class="num">Apts.</th><th class="num">Ofic.</th>
+          <th>Parqueadero</th><th class="num">Piscinas</th><th>Ascensor</th><th>Zona social</th>
+          <th class="num">Administración</th><th th:if="${conAcciones}">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="e : ${filas}">
+          <td><strong th:text="${e.nombre}">Nombre</strong></td>
+          <td th:text="${e.ciudad}">Ciudad</td>
+          <td th:text="${e.departamento}">Depto</td>
+          <td class="num" th:text="${e.numPisos}">0</td>
+          <td class="num" th:text="${#numbers.formatDecimal(e.metrosCuadrados, 1, 'POINT', 2, 'COMMA')}">0</td>
+          <td class="num" th:text="${#numbers.formatDecimal(e.altura, 1, 'POINT', 2, 'COMMA')}">0</td>
+          <td class="num" th:text="${e.numApartamentos}">0</td>
+          <td class="num" th:text="${e.numOficinas}">0</td>
+          <td th:text="${e.nombreParqueadero}">Parqueadero</td>
+          <td class="num" th:text="${e.numPiscinas}">0</td>
+          <td><span class="etiqueta" th:classappend="${e.tieneAscensor} ? 'si' : 'no'" th:text="${e.tieneAscensor} ? 'Sí' : 'No'">Sí</span></td>
+          <td><span class="etiqueta" th:classappend="${e.tieneZonaSocial} ? 'si' : 'no'" th:text="${e.tieneZonaSocial} ? 'Sí' : 'No'">Sí</span></td>
+          <td class="num" th:text="'$ ' + ${#numbers.formatDecimal(e.valorAdministracion, 1, 'POINT', 0, 'COMMA')}">$ 0</td>
+          <td class="acciones" th:if="${conAcciones}">
+            <a class="btn peq" th:href="@{/edificios/editar/{id}(id=${e.id})}">Editar</a>
+            <form th:action="@{/edificios/eliminar/{id}(id=${e.id})}" method="post"
+                  onsubmit="return confirm('¿Eliminar este edificio?');">
+              <button class="btn peq peligro" type="submit">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(filas)}"><td colspan="14">No hay edificios para mostrar.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="total" th:text="${#lists.size(filas)} + ' edificio(s)'">0 edificio(s)</p>
+</div>
+
+<div th:fragment="tabla-usuarios(filas, conAcciones)">
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Correo (id)</th><th>Nombre</th><th>Rol</th><th th:if="${conAcciones}">Acciones</th></tr></thead>
+      <tbody>
+        <tr th:each="u : ${filas}">
+          <td th:text="${u.id}">correo</td>
+          <td th:text="${u.nombre}">nombre</td>
+          <td><span class="etiqueta" th:text="${u.rol}">ROL</span></td>
+          <td class="acciones" th:if="${conAcciones}">
+            <a class="btn peq" th:href="@{/usuarios/editar(id=${u.id})}">Editar</a>
+            <form th:action="@{/usuarios/eliminar}" method="post" onsubmit="return confirm('¿Eliminar este usuario?');">
+              <input type="hidden" name="id" th:value="${u.id}">
+              <button class="btn peq peligro" type="submit">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(filas)}"><td colspan="4">No hay usuarios para mostrar.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="total" th:text="${#lists.size(filas)} + ' usuario(s)'">0 usuario(s)</p>
+</div>
+</body>
+</html>

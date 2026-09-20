@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Recuperar clave')}"></head>
+<body>
+<div class="login">
+  <div class="tarjeta">
+    <h1>Recuperar clave</h1>
+    <div th:replace="~{fragments/layout :: mensajes}"></div>
+    <p>Escribe tu correo y te enviaremos una clave temporal.</p>
+    <form th:action="@{/recuperar}" method="post">
+      <div class="campo"><label for="correo">Correo</label>
+        <input type="email" id="correo" name="correo" required autofocus></div>
+      <button class="btn" type="submit">Enviar clave temporal</button>
+    </form>
+    <p class="enlace-centro"><a th:href="@{/login}">Volver al inicio de sesión</a></p>
+  </div>
+</div>
+</body>
+</html>

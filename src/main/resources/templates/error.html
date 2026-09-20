@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Error')}"></head>
+<body>
+<div class="login">
+  <div class="tarjeta">
+    <h1 th:text="${titulo != null} ? ${titulo} : (${status} == 404 ? 'Página no encontrada' : (${status} == 403 ? 'Acceso denegado' : 'Ocurrió un problema'))">Ocurrió un problema</h1>
+    <p th:text="${detalle != null} ? ${detalle} : (${status} == 404 ? 'La página que buscas no existe.' : (${status} == 403 ? 'No tienes permiso para ver esta página.' : 'Ha ocurrido un error inesperado. Intenta de nuevo.'))">Ha ocurrido un error inesperado.</p>
+    <p class="enlace-centro"><a class="btn" th:href="@{/}">Volver al inicio</a></p>
+  </div>
+</div>
+</body>
+</html>

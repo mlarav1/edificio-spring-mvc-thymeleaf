@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Iniciar sesión')}"></head>
+<body>
+<div class="login">
+  <div class="tarjeta">
+    <h1>&#127970; Edificios</h1>
+    <div class="alerta error" th:if="${param.sesion}">Debes iniciar sesión para continuar.</div>
+    <div th:replace="~{fragments/layout :: mensajes}"></div>
+    <form th:action="@{/login}" method="post">
+      <div class="campo"><label for="correo">Correo</label>
+        <input type="email" id="correo" name="correo" required autofocus></div>
+      <div class="campo"><label for="clave">Clave</label>
+        <input type="password" id="clave" name="clave" required></div>
+      <button class="btn" type="submit">Entrar</button>
+    </form>
+    <p class="enlace-centro"><a th:href="@{/recuperar}">¿Olvidaste tu clave?</a></p>
+  </div>
+</div>
+</body>
+</html>
