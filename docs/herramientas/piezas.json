@@ -1,0 +1,11 @@
+[
+  { "archivo": "src/main/java/co/edu/unicartagena/edificios/model/Usuario.java", "nombre": "01-entidad-usuario", "lang": "java", "desde": 10, "hasta": 45 },
+  { "archivo": "src/main/java/co/edu/unicartagena/edificios/model/Edificio.java", "nombre": "02-entidad-edificio", "lang": "java", "desde": 16, "hasta": 62 },
+  { "archivo": "src/main/java/co/edu/unicartagena/edificios/repository/UsuarioRepository.java", "nombre": "03-repositorio-usuario", "lang": "java", "desde": 11 },
+  { "archivo": "src/main/java/co/edu/unicartagena/edificios/service/EdificioService.java", "nombre": "04-servicio-edificio", "lang": "java", "desde": 11, "hasta": 50 },
+  { "archivo": "src/main/java/co/edu/unicartagena/edificios/controller/EdificioController.java", "nombre": "05-controlador-edificio", "lang": "java", "desde": 20, "hasta": 74 },
+  { "archivo": "src/main/resources/templates/edificios/form.html", "nombre": "06-plantilla-thymeleaf-formulario", "lang": "xml", "desde": 1, "hasta": 36 },
+  { "archivo": "src/main/java/co/edu/unicartagena/edificios/config/AuthInterceptor.java", "nombre": "07-verificacion-sesion", "lang": "java", "desde": 10 },
+  { "archivo": "src/main/java/co/edu/unicartagena/edificios/repository/EdificioRepository.java", "nombre": "08-reportes-repositorio", "lang": "java", "desde": 11 },
+  { "archivo": "src/main/java/co/edu/unicartagena/edificios/service/AuthService.java", "nombre": "09-recuperacion-clave", "lang": "java", "desde": 11, "hasta": 55 }
+]
