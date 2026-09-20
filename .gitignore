@@ -1,0 +1,10 @@
+target/
+.env
+.claude/
+CLAUDE.md
+*.log
+.idea/
+*.iml
+.vscode/
+docs/herramientas/node_modules/
+docs/herramientas/package-lock.json
