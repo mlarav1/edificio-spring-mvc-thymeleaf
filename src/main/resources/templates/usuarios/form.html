@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Usuario')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: barra}"></header>
+<main>
+  <h1 th:text="${usuarioForm.nuevo} ? 'Nuevo usuario' : 'Editar usuario'">Usuario</h1>
+  <div class="tarjeta">
+    <form th:action="@{/usuarios/guardar}" th:object="${usuarioForm}" method="post" novalidate>
+      <div class="alerta error" th:if="${#fields.hasGlobalErrors()}">
+        <div th:each="err : ${#fields.globalErrors()}" th:text="${err}">error</div>
+      </div>
+      <input type="hidden" th:field="*{nuevo}">
+      <div class="formulario">
+        <div class="campo"><label for="id">Correo electrónico (id)</label>
+          <input type="email" th:field="*{id}" th:readonly="${!usuarioForm.nuevo}">
+          <small class="err" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></small></div>
+        <div class="campo"><label for="nombre">Nombre</label>
+          <input type="text" th:field="*{nombre}" maxlength="100">
+          <small class="err" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small></div>
+        <div class="campo"><label for="rol">Rol</label>
+          <select th:field="*{rol}">
+            <option value="ADMIN">ADMIN</option><option value="OPERADOR">OPERADOR</option><option value="CONSULTA">CONSULTA</option>
+          </select>
+          <small class="err" th:if="${#fields.hasErrors('rol')}" th:errors="*{rol}"></small></div>
+        <div class="campo"><label for="clave" th:text="${usuarioForm.nuevo} ? 'Clave' : 'Nueva clave (dejar vacío para no cambiarla)'">Clave</label>
+          <input type="password" th:field="*{clave}" autocomplete="new-password" value=""></div>
+      </div>
+      <div class="pie-form">
+        <button class="btn" type="submit">Guardar</button>
+        <a class="btn sec" th:href="@{/usuarios}">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</main>
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>

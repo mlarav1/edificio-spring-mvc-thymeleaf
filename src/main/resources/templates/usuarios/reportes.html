@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Reportes de usuarios')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: barra}"></header>
+<main>
+  <div th:replace="~{fragments/layout :: mensajes}"></div>
+  <h1>Reportes de usuarios</h1>
+
+  <div class="tarjeta">
+    <h2>1. Usuarios por rol</h2>
+    <form th:action="@{/usuarios/reportes/rol}" method="get">
+      <div class="formulario">
+        <div class="campo"><label for="rol">Rol</label>
+          <select id="rol" name="rol">
+            <option value="ADMIN" th:selected="${param.rol != null and param.rol[0] == 'ADMIN'}">ADMIN</option>
+            <option value="OPERADOR" th:selected="${param.rol != null and param.rol[0] == 'OPERADOR'}">OPERADOR</option>
+            <option value="CONSULTA" th:selected="${param.rol != null and param.rol[0] == 'CONSULTA'}">CONSULTA</option></select></div>
+      </div>
+      <div class="pie-form"><button class="btn" type="submit">Consultar</button></div>
+    </form>
+    <th:block th:if="${reporte == '1' and resultado != null}">
+      <hr>
+      <div th:replace="~{fragments/layout :: tabla-usuarios(${resultado}, false)}"></div>
+    </th:block>
+  </div>
+
+  <div class="tarjeta">
+    <h2>2. Usuarios por texto en nombre o correo</h2>
+    <form th:action="@{/usuarios/reportes/texto}" method="get">
+      <div class="formulario">
+        <div class="campo"><label for="texto">Texto (nombre, correo o dominio, p. ej. edificios.com)</label>
+          <input type="text" id="texto" name="texto" required minlength="2" th:value="${param.texto}"></div>
+      </div>
+      <div class="pie-form"><button class="btn" type="submit">Consultar</button></div>
+    </form>
+    <th:block th:if="${reporte == '2' and resultado != null}">
+      <hr>
+      <div th:replace="~{fragments/layout :: tabla-usuarios(${resultado}, false)}"></div>
+    </th:block>
+  </div>
+</main>
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>

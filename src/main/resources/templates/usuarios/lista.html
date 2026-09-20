@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Usuarios')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: barra}"></header>
+<main>
+  <div th:replace="~{fragments/layout :: mensajes}"></div>
+  <div class="cabecera-lista">
+    <h1>Usuarios</h1>
+    <a class="btn" th:href="@{/usuarios/nuevo}">+ Nuevo usuario</a>
+  </div>
+  <div class="tarjeta" th:replace="~{fragments/layout :: tabla-usuarios(${usuarios}, true)}"></div>
+</main>
+<footer th:replace="~{fragments/layout :: pie}"></footer>
+</body>
+</html>
