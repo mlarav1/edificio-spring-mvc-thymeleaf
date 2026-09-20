@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.math.BigDecimal;
 
 /**
- * Controlador MVC de Edificio (@Controller, no @RestController): carga datos en el Model
+ * Controlador MVC de Edificio (@Controller, sin JSON): carga datos en el Model
  * y RETORNA EL NOMBRE de una plantilla Thymeleaf; Spring genera el HTML.
  */
 @Controller
